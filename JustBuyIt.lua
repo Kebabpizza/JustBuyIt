@@ -1,5 +1,6 @@
 local initialized = false
 local listenToCommoditiesEvents = false
+local resetQuantity = false
 
 local buyUnits = 0
 local buyId = 0
@@ -23,6 +24,16 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         end
 
         initialized = true
+
+        originalSetQuantity = AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.SetQuantity
+
+        AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.SetQuantity = function(self, value)
+            if (resetQuantity) then
+                value = buyUnits
+                resetQuantity = false
+            end
+            originalSetQuantity(self, value)
+        end
 
         moneyInput = CreateFrame("Frame", nil, AuctionHouseFrame.CommoditiesBuyFrame, "MoneyInputFrameTemplate")
         moneyInput.hideCopper = true
@@ -72,12 +83,14 @@ f:SetScript("OnEvent", function(self, eventName, ...)
             C_AuctionHouse.CancelCommoditiesPurchase()
             buyButton:SetEnabled(true)
         else
+            resetQuantity = true
             C_AuctionHouse.ConfirmCommoditiesPurchase(buyId, buyUnits)
         end
     end
 
     if (eventName == "COMMODITY_PURCHASE_FAILED") then
         listenToCommoditiesEvents = false
+        resetQuantity = false
         text:SetText("Failed")
         buyButton:SetEnabled(true)
     end
