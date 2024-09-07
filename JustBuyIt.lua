@@ -35,6 +35,15 @@ f:SetScript("OnEvent", function(self, eventName, ...)
             originalSetQuantity(self, value)
         end
 
+        AuctionHouseFrame:RegisterCallback(AuctionHouseFrameMixin.Event.CommoditiesQuantitySelectionChanged, function()
+            local quantity = AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput:GetQuantity()
+            if (quantity <= 0) then
+                buyButton:SetEnabled(false)
+            elseif (listenToCommoditiesEvents == false) then
+                buyButton:SetEnabled(true)
+            end
+        end)
+
         moneyInput = CreateFrame("Frame", nil, AuctionHouseFrame.CommoditiesBuyFrame, "MoneyInputFrameTemplate")
         moneyInput.hideCopper = true
         moneyInput:SetPoint("CENTER", AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.BuyButton, 0, -30)
