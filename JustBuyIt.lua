@@ -30,7 +30,7 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         MoneyInputFrame_SetCopperShown(moneyInput, false)
         moneyInput:Show()
 
-        buyButton = CreateFrame("Button", nil, AuctionHouseFrame.CommoditiesBuyFrame, "UIPanelButtonTemplate");
+        buyButton = CreateFrame("Button", "JustBuyIt.BuyButton", AuctionHouseFrame.CommoditiesBuyFrame, "UIPanelButtonTemplate");
         buyButton:SetPoint("CENTER", AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.BuyButton, 0, -60)
         buyButton:SetFrameStrata("FULLSCREEN")
         buyButton:SetWidth(196)
@@ -54,6 +54,8 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         text = textFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
         text:SetPoint("CENTER", textFrame, "CENTER")
     end
+
+    _G["JusyBuyIt.BuyButton"] = buyButton
 
     if (listenToCommoditiesEvents == false) then
         return
