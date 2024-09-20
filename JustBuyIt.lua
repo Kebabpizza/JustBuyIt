@@ -91,7 +91,7 @@ f:SetScript("OnEvent", function(self, eventName, ...)
             text:SetText("Too expensive (" .. formatMoney(averageUnitPrice) .. ")")
             C_AuctionHouse.CancelCommoditiesPurchase()
             buyButton:SetEnabled(true)
-            AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton.OnClick(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton)
+            refreshListings()
         else
             resetQuantity = true
             C_AuctionHouse.ConfirmCommoditiesPurchase(buyId, buyUnits)
@@ -103,14 +103,14 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         resetQuantity = false
         text:SetText("Failed")
         buyButton:SetEnabled(true)
-        AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton.OnClick(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton)
+        refreshListings()
     end
 
     if (eventName == "COMMODITY_PURCHASE_SUCCEEDED") then
         listenToCommoditiesEvents = false
         text:SetText("Success")
         buyButton:SetEnabled(true)
-        AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton.OnClick(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton)
+        refreshListings()
     end
 end)
 
@@ -120,3 +120,6 @@ function formatMoney(copper)
     return string.format("%dg%02ds", gold, silver)
 end
 
+function refreshListings()
+    AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton.OnClick(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.RefreshFrame.RefreshButton)
+end
