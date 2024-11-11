@@ -1,7 +1,8 @@
-## Interface: 110002
+## Interface: 110005
 ## Title : Just Buy It
 ## Author: Rotab
-## Version: 1.0
+## Version: 1.1
+## SavedVariables: JustBuyItDB
 ## Dependencies: 
 
 JustBuyIt.lua
