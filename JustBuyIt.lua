@@ -19,6 +19,7 @@ f:RegisterEvent("AUCTION_HOUSE_SHOW")
 f:RegisterEvent("COMMODITY_PRICE_UPDATED")
 f:RegisterEvent("COMMODITY_PURCHASE_FAILED")
 f:RegisterEvent("COMMODITY_PURCHASE_SUCCEEDED")
+f:RegisterEvent("COMMODITY_SEARCH_RESULTS_UPDATED")
 f:RegisterEvent("COMMODITY_SEARCH_RESULTS_RECEIVED")
 f:RegisterEvent("AUCTION_HOUSE_BROWSE_FAILURE")
 
@@ -141,6 +142,13 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         text:SetText("Failed")
         buyButton:SetEnabled(true)
         refreshListings()
+    end
+
+    if (eventName == "COMMODITY_SEARCH_RESULTS_UPDATED") then
+        local id = ...
+        if (id ~= buyId) then
+            resetSlowBuy()
+        end
     end
 
     if (eventName == "COMMODITY_SEARCH_RESULTS_RECEIVED") then
