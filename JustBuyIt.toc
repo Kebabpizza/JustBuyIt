@@ -4,5 +4,6 @@
 ## Version: 1.1
 ## SavedVariables: JustBuyItDB
 ## Dependencies: 
+## Category: Auctions
 
 JustBuyIt.lua
