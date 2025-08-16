@@ -68,9 +68,11 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         moneyInputLabel:SetPoint("TOP", quantityInput, "BOTTOM", 0, 0)
         moneyInputLabel:SetText(AUCTION_HOUSE_UNIT_PRICE_LABEL)
 
-        moneyInput = CreateFrame("Frame", nil, moneyInputFrame, "MoneyInputFrameTemplate")
+        moneyInput = CreateFrame("Frame", "JustBuyIt.MoneyInput", moneyInputFrame, "MoneyInputFrameTemplate")
+        if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+            MoneyInputFrame_SetCopperShown(moneyInput, false)
+        end
         moneyInput:SetPoint("LEFT", moneyInputLabel, "RIGHT", 23, 0)
-        MoneyInputFrame_SetCopperShown(moneyInput, false)
         MoneyInputFrame_SetOnValueChangedFunc(moneyInput, function()
             if (slowBuyNext) then
                 resetSlowBuy()
@@ -114,8 +116,14 @@ f:SetScript("OnEvent", function(self, eventName, ...)
         local settingsButton = CreateFrame("Button", nil, AuctionHouseFrame.CommoditiesBuyFrame, nil)
         settingsButton:SetSize(24, 24)
         settingsButton:SetPoint("LEFT", buyButton, "RIGHT", 12, 0)
-        settingsButton:SetNormalAtlas("mechagon-projects")
-        settingsButton:SetHighlightAtlas("mechagon-projects")
+        if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+            settingsButton:SetNormalAtlas("mechagon-projects")
+            settingsButton:SetHighlightAtlas("mechagon-projects")
+        else
+            settingsButton:SetNormalTexture("Interface\\Icons\\INV_Misc_Gear_01")
+            settingsButton:SetPushedTexture("Interface\\Icons\\INV_Misc_Gear_01")
+            settingsButton:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
+        end
         settingsButton:SetFrameStrata("FULLSCREEN")
         settingsButton:SetScript("OnClick", function()
             Settings.OpenToCategory(settingsCategory:GetID())
@@ -218,7 +226,13 @@ end)
 function formatMoney(copper)
     local gold = math.floor(copper / 10000)
     local silver = math.floor((copper % 10000) / 100)
-    return string.format("%dg%02ds", gold, silver)
+
+    if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+        return string.format("%dg%02ds", gold, silver)
+    else
+        local copper = copper % 100
+        return string.format("%dg%02ds%02dc", gold, silver, copper)
+    end
 end
 
 function refreshListings()

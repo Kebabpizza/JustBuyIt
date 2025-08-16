@@ -1,4 +1,4 @@
-## Interface: 110005
+## Interface: 110200, 50500
 ## Title : Just Buy It
 ## Author: Rotab
 ## Version: 1.1
