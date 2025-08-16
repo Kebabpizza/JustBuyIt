@@ -1,7 +1,7 @@
 ## Interface: 110200, 50500
 ## Title : Just Buy It
 ## Author: Rotab
-## Version: 1.1
+## Version: 1.2
 ## SavedVariables: JustBuyItDB
 ## Dependencies: 
 ## Category: Auctions
